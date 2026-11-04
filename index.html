@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Aluvia Systems</title>
+<meta name="description" content="Website design and marketing systems for local businesses.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Instrument+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* Layout: clean white page, trust-blue brand, one bright orange for every call to action.
+   Navy bands (process, final CTA, footer) break up the white. Single light look by design. */
+:root {
+  --bg: #FFFFFF;          /* main page color */
+  --bg-2: #F4F7FC;        /* soft alternate sections */
+  --ink: #0B1B33;         /* headings and body text */
+  --ink-soft: #4B5B73;
+  --blue: #1D5BFF;        /* brand: trust */
+  --blue-soft: #E8EFFF;
+  --navy: #0A1F44;        /* dark bands */
+  --navy-2: #15336E;
+  --on-navy: #FFFFFF;
+  --on-navy-soft: #B5C3DD;
+  --orange: #FF7A1A;      /* CTA only: contrasts with both white and blue */
+  --orange-ink: #1B0B00;
+  --green: #12A150;       /* checkmarks and "booked" states */
+  --line: #E3E8F1;
+  --card: #FFFFFF;
+
+  --display: "Bricolage Grotesque", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  --body: "Instrument Sans", "Helvetica Neue", Arial, system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+
+  --step--1: 0.8125rem;
+  --step-0: 1rem;
+  --step-1: 1.25rem;
+  --step-2: 1.6rem;
+  --step-3: clamp(1.9rem, 1.4rem + 2vw, 2.75rem);
+  --step-4: clamp(2.5rem, 1.6rem + 4vw, 4.6rem);
+  --radius: 14px;
+  --max: 1160px;
+  color-scheme: light;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg); color: var(--ink);
+  font-family: var(--body); font-size: var(--step-0); line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 60; background: var(--bg); }
+h1, h2, h3 { font-family: var(--display); line-height: 1.05; margin: 0; text-wrap: balance; letter-spacing: -0.02em; }
+p { margin: 0; }
+a { color: inherit; }
+:focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; border-radius: 6px; }
+
+.wrap {
+  max-width: var(--max); margin-inline: auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+.band { padding-block: clamp(64px, 9vw, 120px); }
+.band--navy { background: var(--navy); color: var(--on-navy); }
+.band--soft { background: var(--bg-2); }
+
+.eyebrow {
+  font-family: var(--mono); font-size: var(--step--1); text-transform: uppercase;
+  letter-spacing: 0.12em; color: var(--blue);
+}
+.band--navy .eyebrow, .cta .eyebrow { color: #8FB0FF; }
+.section-head { display: grid; gap: 14px; max-width: 46rem; margin-bottom: clamp(36px, 5vw, 56px); }
+.section-head h2 { font-size: var(--step-3); }
+.section-head h2 small { display: block; font-family: var(--body); font-weight: 500; font-size: var(--step-1); letter-spacing: 0; color: var(--ink-soft); margin-top: 10px; }
+.section-head p { color: var(--ink-soft); font-size: var(--step-1); line-height: 1.45; }
+.band--navy .section-head p, .band--navy .section-head h2 small { color: var(--on-navy-soft); }
+
+.btn {
+  display: inline-flex; align-items: center; gap: 10px; justify-content: center;
+  font-family: var(--body); font-weight: 600; font-size: var(--step-0);
+  padding: 14px 22px; border-radius: 999px; border: 0; cursor: pointer;
+  text-decoration: none; transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+}
+.btn--primary { background: var(--orange); color: var(--orange-ink); box-shadow: 0 8px 22px -8px rgba(255,122,26,.7); }
+.btn--primary:hover { transform: translateY(-2px); box-shadow: 0 12px 26px -8px rgba(255,122,26,.8); }
+.btn--ghost { background: transparent; color: var(--ink); box-shadow: inset 0 0 0 1.5px var(--line); }
+.btn--ghost:hover { box-shadow: inset 0 0 0 1.5px var(--ink); }
+.btn--link { background: none; padding: 0; color: var(--blue); }
+.btn--link:hover { text-decoration: underline; }
+.btn svg { width: 18px; height: 18px; }
+
+/* ---------- Nav ---------- */
+.nav {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 50;
+  background: color-mix(in srgb, var(--bg) 92%, transparent);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--line);
+}
+.nav .wrap { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding-block: 14px; }
+.logo { display: flex; align-items: center; gap: 10px; text-decoration: none; font-family: var(--display); font-weight: 800; font-size: 1.3rem; letter-spacing: -0.02em; color: var(--ink); }
+.logo svg { width: 34px; height: 34px; flex: none; }
+.logo small { display: block; font-family: var(--mono); font-weight: 500; font-size: 0.62rem; letter-spacing: 0.22em; color: var(--blue); margin-top: 2px; }
+.logo span { line-height: 1; }
+.nav ul { display: flex; gap: 26px; list-style: none; margin: 0; padding: 0; font-weight: 500; font-size: 0.95rem; }
+.nav ul a { text-decoration: none; color: var(--ink-soft); }
+.nav ul a:hover { color: var(--ink); }
+.nav-right { display: flex; align-items: center; gap: 18px; }
+.nav-right .login { text-decoration: none; font-weight: 500; font-size: 0.95rem; color: var(--ink-soft); }
+.nav .btn { padding: 10px 18px; font-size: 0.92rem; }
+@media (max-width: 900px) { .nav ul, .nav-right .login { display: none; } }
+
+/* ---------- Hero ---------- */
+.hero { position: relative; overflow: hidden; background:
+  radial-gradient(60% 70% at 85% 30%, var(--blue-soft), transparent 70%),
+  var(--bg); }
+.hero .wrap { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: clamp(32px, 5vw, 72px); align-items: center; padding-block: clamp(48px, 7vw, 96px) clamp(56px, 8vw, 104px); }
+.hero-copy { display: grid; gap: 24px; min-width: 0; }
+.hero h1 { font-size: var(--step-4); font-weight: 800; }
+.hero h1 em { font-style: normal; color: var(--blue); }
+.hero .kicker { font-family: var(--display); font-weight: 700; font-size: var(--step-2); line-height: 1.2; }
+.hero .lede { font-size: var(--step-1); color: var(--ink-soft); max-width: 34rem; line-height: 1.5; }
+.hero-ctas { display: flex; flex-wrap: wrap; gap: 12px; }
+.ratings { display: flex; flex-wrap: wrap; gap: 10px; }
+.ratings span { display: inline-flex; align-items: center; gap: 8px; font-size: 0.88rem; font-weight: 500; background: var(--card); border: 1px solid var(--line); border-radius: 999px; padding: 6px 12px; }
+.ratings b { color: var(--orange); letter-spacing: 1px; font-weight: 600; }
+.hero-proof { display: flex; flex-wrap: wrap; gap: 10px 22px; font-size: 0.92rem; color: var(--ink-soft); }
+.hero-proof span { display: inline-flex; align-items: center; gap: 8px; }
+.hero-proof svg { width: 16px; height: 16px; color: var(--green); }
+@media (max-width: 900px) { .hero .wrap { grid-template-columns: 1fr; } }
+
+/* Mascot + phone demo */
+.hero-visual { justify-self: center; display: flex; align-items: flex-end; width: min(470px, 100%); }
+.mascot { position: relative; flex: 0 0 34%; margin: 0 -12px 0 0; z-index: 2; }
+.mascot svg { display: block; width: 100%; height: auto; filter: drop-shadow(0 14px 18px rgba(11,27,51,.18)); }
+.bubble { position: absolute; top: -18px; left: 0; right: -10px; background: var(--card); border: 1px solid var(--line); border-radius: 14px 14px 14px 4px; padding: 8px 12px; font-size: 0.8rem; line-height: 1.35; box-shadow: 0 10px 24px -14px rgba(11,27,51,.4); }
+.bubble b { color: var(--blue); }
+.cta-side { display: grid; justify-items: center; gap: 4px; }
+.cta-side .otter { width: 150px; height: auto; display: block; }
+.phone {
+  flex: 1 1 auto; min-width: 0; width: min(300px, 100%);
+  background: var(--ink); border-radius: 38px; padding: 10px;
+  box-shadow: 0 40px 80px -30px rgba(11,27,51,.45);
+}
+.phone-screen { background: var(--bg-2); border-radius: 30px; overflow: hidden; }
+.phone-top { background: var(--card); padding: 18px 16px 12px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid var(--line); }
+.avatar { width: 34px; height: 34px; border-radius: 50%; background: var(--blue-soft); display: grid; place-items: center; font-weight: 700; font-size: 0.85rem; color: var(--blue); flex: none; }
+.phone-top b { display: block; font-size: 0.92rem; }
+.phone-top small { color: var(--ink-soft); font-size: 0.76rem; }
+.thread { display: grid; gap: 10px; padding: 16px 14px 20px; font-size: 0.86rem; line-height: 1.4; }
+.sys { justify-self: center; font-family: var(--mono); font-size: 0.68rem; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-soft); background: var(--card); border: 1px solid var(--line); padding: 4px 10px; border-radius: 999px; display: inline-flex; gap: 6px; align-items: center; }
+.sys i { width: 7px; height: 7px; border-radius: 50%; background: #E2574C; display: inline-block; }
+.msg { max-width: 82%; padding: 9px 12px; border-radius: 16px; }
+.msg.out { justify-self: end; background: var(--blue); color: #fff; border-bottom-right-radius: 4px; }
+.msg.in { justify-self: start; background: var(--card); border: 1px solid var(--line); border-bottom-left-radius: 4px; }
+.msg-meta { font-family: var(--mono); font-size: 0.64rem; color: var(--ink-soft); justify-self: end; margin-top: -4px; }
+.booked { justify-self: stretch; display: flex; align-items: center; gap: 10px; background: #E3F6EA; color: #0B5B2E; border-radius: 12px; padding: 10px 12px; font-size: 0.8rem; }
+.booked svg { width: 18px; height: 18px; flex: none; }
+@media (prefers-reduced-motion: no-preference) {
+  .thread > * { animation: pop .45s cubic-bezier(.2,.8,.2,1) both; }
+  .thread > *:nth-child(1) { animation-delay: .3s }
+  .thread > *:nth-child(2) { animation-delay: .9s }
+  .thread > *:nth-child(3) { animation-delay: 1.1s }
+  .thread > *:nth-child(4) { animation-delay: 2.0s }
+  .thread > *:nth-child(5) { animation-delay: 2.9s }
+  .thread > *:nth-child(6) { animation-delay: 3.7s }
+}
+@keyframes pop { from { opacity: 0; transform: translateY(8px) scale(.97); } }
+
+/* ---------- Niche ticker ---------- */
+.ticker { background: var(--blue); color: #fff; overflow: hidden; padding-block: 14px; }
+.ticker-track { display: flex; width: max-content; font-family: var(--display); font-weight: 700; font-size: 1.15rem; }
+.ticker-track span { padding-inline: 22px; display: inline-flex; align-items: center; gap: 22px; white-space: nowrap; }
+.ticker-track span::after { content: "✦"; font-size: .7em; opacity: .55; }
+@media (prefers-reduced-motion: no-preference) { .ticker-track { animation: slide 50s linear infinite; } }
+@keyframes slide { to { transform: translateX(-50%); } }
+
+/* ---------- Systems tabs ---------- */
+.systems { display: grid; grid-template-columns: 300px 1fr; gap: clamp(24px, 4vw, 48px); align-items: start; }
+.tablist { display: grid; gap: 6px; }
+.tab {
+  display: grid; grid-template-columns: auto 1fr; gap: 4px 14px; align-items: center; text-align: left;
+  background: transparent; border: 0; border-radius: 12px; padding: 14px 16px; cursor: pointer; color: var(--ink);
+  font-family: var(--body); font-size: 1rem;
+}
+.tab .ic { width: 38px; height: 38px; border-radius: 10px; display: grid; place-items: center; background: var(--bg-2); grid-row: span 2; color: var(--ink-soft); }
+.tab .ic svg { width: 20px; height: 20px; }
+.tab b { font-weight: 600; }
+.tab small { color: var(--ink-soft); font-size: 0.82rem; }
+.tab:hover { background: var(--bg-2); }
+.tab[aria-selected="true"] { background: var(--card); box-shadow: 0 0 0 1px var(--line), 0 12px 30px -18px rgba(11,27,51,.35); }
+.tab[aria-selected="true"] .ic { background: var(--blue); color: #fff; }
+.panel { background: var(--card); border: 1px solid var(--line); border-radius: 20px; padding: clamp(24px, 4vw, 44px); display: grid; gap: 28px; min-width: 0; box-shadow: 0 24px 60px -40px rgba(11,27,51,.35); }
+.panel h3 { font-size: var(--step-2); }
+.panel > header { display: grid; gap: 10px; }
+.panel > header p { color: var(--ink-soft); font-size: 1.08rem; max-width: 40rem; }
+.points { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 22px 28px; list-style: none; margin: 0; padding: 0; }
+.points li { display: grid; gap: 4px; padding-top: 16px; border-top: 1px solid var(--line); }
+.points b { font-weight: 600; }
+.points span { color: var(--ink-soft); font-size: 0.95rem; }
+.panel-foot { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; padding-top: 6px; }
+.stat { font-family: var(--mono); font-size: var(--step--1); color: var(--ink-soft); }
+.stat b { font-family: var(--display); font-size: 1.6rem; color: var(--blue); margin-right: 8px; letter-spacing: -0.02em; }
+@media (max-width: 900px) {
+  .systems { grid-template-columns: 1fr; }
+  .tablist { grid-auto-flow: column; grid-auto-columns: max-content; overflow-x: auto; padding-bottom: 6px; }
+  .tab { grid-template-columns: auto; }
+  .tab .ic { grid-row: auto; }
+  .tab small { display: none; }
+}
+@media (max-width: 560px) { .points { grid-template-columns: 1fr; } }
+
+/* ---------- Niches ---------- */
+.niches { display: flex; flex-wrap: wrap; gap: 10px; }
+.niches span { background: var(--card); border: 1px solid var(--line); padding: 9px 16px; border-radius: 999px; font-weight: 500; font-size: 0.95rem; }
+.niches-foot { margin-top: 28px; display: flex; flex-wrap: wrap; gap: 12px 20px; align-items: center; color: var(--ink-soft); }
+
+/* ---------- Process ---------- */
+.steps { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); list-style: none; padding: 0; margin: 0; }
+.steps li { position: relative; padding: 0 28px 0 0; display: grid; gap: 12px; align-content: start; }
+.steps .dot { width: 44px; height: 44px; border-radius: 50%; background: var(--orange); color: var(--orange-ink); display: grid; place-items: center; font-family: var(--display); font-weight: 800; font-size: 1.2rem; position: relative; z-index: 1; }
+.steps li:not(:last-child)::before { content: ""; position: absolute; top: 22px; left: 44px; right: 0; border-top: 2px dashed rgba(255,255,255,.22); }
+.steps h3 { font-size: 1.45rem; margin-top: 8px; }
+.steps .time { font-family: var(--mono); font-size: var(--step--1); color: #8FB0FF; letter-spacing: .06em; text-transform: uppercase; }
+.steps p { color: var(--on-navy-soft); max-width: 22rem; }
+@media (max-width: 800px) {
+  .steps { grid-template-columns: 1fr; gap: 36px; }
+  .steps li { padding: 0 0 0 64px; }
+  .steps .dot { position: absolute; left: 0; top: 0; }
+  .steps li:not(:last-child)::before { top: 48px; left: 21px; bottom: -32px; right: auto; border-top: 0; border-left: 2px dashed rgba(255,255,255,.22); }
+  .steps h3 { margin-top: 6px; }
+}
+
+/* ---------- Why ---------- */
+.why { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 20px; overflow: hidden; }
+.why div { background: var(--bg); padding: 28px; display: grid; gap: 8px; align-content: start; }
+.why h3 { font-size: 1.25rem; display: flex; align-items: center; gap: 10px; }
+.why h3 svg { width: 20px; height: 20px; color: var(--green); flex: none; }
+.why p { color: var(--ink-soft); }
+@media (max-width: 860px) { .why { grid-template-columns: repeat(2, minmax(0,1fr)); } }
+@media (max-width: 560px) { .why { grid-template-columns: 1fr; } }
+
+/* ---------- Reviews ---------- */
+.reviews { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 20px; }
+.review { margin: 0; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 26px; display: grid; gap: 18px; align-content: space-between; }
+.stars { color: var(--orange); letter-spacing: 2px; font-size: 1rem; }
+.review blockquote { margin: 0; font-size: 1.08rem; line-height: 1.5; }
+.review footer { display: flex; align-items: center; gap: 12px; font-size: 0.9rem; }
+.review footer small { display: block; color: var(--ink-soft); }
+.tag { font-family: var(--mono); font-size: 0.66rem; text-transform: uppercase; letter-spacing: .1em; color: var(--ink-soft); border: 1px dashed var(--line); padding: 3px 8px; border-radius: 6px; margin-left: auto; }
+@media (max-width: 900px) { .reviews { grid-template-columns: 1fr; } }
+
+/* ---------- FAQ ---------- */
+.faq-grid { display: grid; grid-template-columns: 0.8fr 1.2fr; gap: clamp(28px, 5vw, 72px); }
+.faq details { border-top: 1px solid var(--line); }
+.faq details:last-child { border-bottom: 1px solid var(--line); }
+.faq summary { list-style: none; cursor: pointer; padding: 20px 0; font-weight: 600; font-size: 1.08rem; display: flex; justify-content: space-between; gap: 16px; align-items: center; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: "+"; font-family: var(--display); font-size: 1.6rem; line-height: 1; color: var(--blue); transition: transform .2s; flex: none; }
+.faq details[open] summary::after { transform: rotate(45deg); }
+.faq details p { padding: 0 0 22px; color: var(--ink-soft); max-width: 40rem; }
+@media (max-width: 860px) { .faq-grid { grid-template-columns: 1fr; } }
+
+/* ---------- CTA + footer ---------- */
+.cta { background: var(--navy); color: var(--on-navy); }
+.cta .wrap { padding-block: clamp(64px, 9vw, 112px); display: grid; grid-template-columns: 1.2fr auto; gap: 32px; align-items: end; }
+.cta h2 { font-size: var(--step-4); font-weight: 800; margin-top: 14px; }
+.cta h2 em { font-style: normal; color: var(--orange); }
+.cta p { color: var(--on-navy-soft); font-size: var(--step-1); margin-top: 18px; max-width: 34rem; }
+.cta .btn { font-size: 1.1rem; padding: 18px 28px; }
+@media (max-width: 800px) { .cta .wrap { grid-template-columns: 1fr; align-items: start; } }
+
+footer.site { background: var(--navy); color: var(--on-navy-soft); border-top: 1px solid rgba(255,255,255,.1); font-size: 0.92rem; }
+footer.site .wrap { padding-block: 48px 36px; display: grid; grid-template-columns: 1.4fr repeat(3, 1fr); gap: 32px; }
+footer.site h4 { margin: 0 0 12px; font-family: var(--mono); font-weight: 500; font-size: var(--step--1); text-transform: uppercase; letter-spacing: .12em; color: #8FB0FF; }
+footer.site ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+footer.site a { text-decoration: none; }
+footer.site a:hover { color: var(--on-navy); }
+footer.site .brand { display: grid; gap: 14px; align-content: start; }
+footer.site .logo { color: var(--on-navy); }
+footer.site .logo small { color: #8FB0FF; }
+footer.site .brand p { max-width: 22rem; }
+.legal { grid-column: 1 / -1; border-top: 1px solid rgba(255,255,255,.1); padding-top: 22px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; font-size: 0.82rem; }
+@media (max-width: 800px) { footer.site .wrap { grid-template-columns: 1fr 1fr; } footer.site .brand { grid-column: 1 / -1; } }
+</style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="mark" viewBox="0 0 40 40"><rect width="40" height="40" rx="11" fill="#1D5BFF"/><path d="M8 30 C 14 22, 18 14, 20 8 C 22 14, 26 22, 32 30" fill="none" stroke="#FFFFFF" stroke-width="3.2" stroke-linecap="round"/><path d="M12 25 C 17 21.5, 23 21.5, 28 25" fill="none" stroke="#FF7A1A" stroke-width="2.6" stroke-linecap="round"/></symbol>
+  <symbol id="otter" viewBox="0 0 240 320">
+    <path d="M150 285 C 205 285, 232 250, 226 205 C 218 238, 192 262, 150 262 Z" fill="#6E4A30"/>
+    <ellipse cx="92" cy="302" rx="24" ry="12" fill="#6E4A30"/>
+    <ellipse cx="148" cy="302" rx="24" ry="12" fill="#6E4A30"/>
+    <path d="M68 300 C 58 240, 68 178, 120 174 C 172 178, 182 240, 172 300 Z" fill="#9A6B47"/>
+    <path d="M70 292 C 64 246, 72 200, 120 194 C 168 200, 176 246, 170 292 Z" fill="#1D5BFF"/>
+    <path d="M106 262 C 110 255, 116 244, 120 234 C 124 244, 130 255, 134 262" fill="none" stroke="#FFFFFF" stroke-width="4.5" stroke-linecap="round"/>
+    <path d="M110 255 C 116 251, 124 251, 130 255" fill="none" stroke="#FF7A1A" stroke-width="3.5" stroke-linecap="round"/>
+    <path d="M80 212 L 72 262" stroke="#9A6B47" stroke-width="22" stroke-linecap="round"/>
+    <circle cx="71" cy="266" r="13" fill="#8A5E3E"/>
+    <g>
+      <path d="M160 212 L 198 146" stroke="#9A6B47" stroke-width="22" stroke-linecap="round"/>
+      <circle cx="200" cy="140" r="15" fill="#8A5E3E"/>
+      <path d="M192 128 v-7 M200 126 v-8 M208 128 v-7" stroke="#8A5E3E" stroke-width="6" stroke-linecap="round"/>
+      <animateTransform attributeName="transform" type="rotate" values="0 160 212; -14 160 212; 8 160 212; -14 160 212; 0 160 212" begin="0.6s" dur="1.6s" repeatCount="3"/>
+    </g>
+    <circle cx="60" cy="108" r="13" fill="#8A5E3E"/>
+    <circle cx="180" cy="108" r="13" fill="#8A5E3E"/>
+    <circle cx="60" cy="108" r="6" fill="#F3DDBF"/>
+    <circle cx="180" cy="108" r="6" fill="#F3DDBF"/>
+    <ellipse cx="120" cy="120" rx="62" ry="56" fill="#9A6B47"/>
+    <ellipse cx="120" cy="140" rx="44" ry="31" fill="#F3DDBF"/>
+    <path d="M60 102 C 60 50, 180 50, 180 102 C 150 94, 90 94, 60 102 Z" fill="#1D5BFF"/>
+    <path d="M150 97 C 180 92, 206 97, 212 106 C 192 110, 166 108, 148 104 Z" fill="#0A1F44"/>
+    <circle cx="120" cy="63" r="5" fill="#0A1F44"/>
+    <path d="M110 88 C 113 82, 117 74, 120 67 C 123 74, 127 82, 130 88" fill="none" stroke="#FFFFFF" stroke-width="3.5" stroke-linecap="round"/>
+    <path d="M113 83 C 117 80, 123 80, 127 83" fill="none" stroke="#FF7A1A" stroke-width="2.8" stroke-linecap="round"/>
+    <circle cx="98" cy="116" r="7.5" fill="#0B1B33"/>
+    <circle cx="142" cy="116" r="7.5" fill="#0B1B33"/>
+    <circle cx="95.5" cy="113.5" r="2.6" fill="#FFFFFF"/>
+    <circle cx="139.5" cy="113.5" r="2.6" fill="#FFFFFF"/>
+    <ellipse cx="86" cy="140" rx="7" ry="5" fill="#FF8FA3" opacity=".45"/>
+    <ellipse cx="154" cy="140" rx="7" ry="5" fill="#FF8FA3" opacity=".45"/>
+    <ellipse cx="120" cy="131" rx="10" ry="7" fill="#0B1B33"/>
+    <path d="M108 144 Q 114 153 120 144 Q 126 153 132 144" fill="none" stroke="#0B1B33" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M98 138 L 70 132 M98 145 L 70 149 M142 138 L 170 132 M142 145 L 170 149" stroke="#6E4A30" stroke-width="2" stroke-linecap="round"/>
+  </symbol>
+</svg>
+
+<nav class="nav" aria-label="Main">
+  <div class="wrap">
+    <a class="logo" href="#top"><svg><use href="#mark"/></svg><span>Aluvia<small>SYSTEMS</small></span></a>
+    <ul>
+      <li><a href="#systems">Products</a></li>
+      <li><a href="#book">Pricing</a></li>
+      <li><a href="#reviews">Testimonials</a></li>
+      <li><a href="#process">Our Process</a></li>
+      <li><a href="#faq">FAQ</a></li>
+    </ul>
+    <div class="nav-right">
+      <a class="login" href="#book">Log in</a>
+      <a class="btn btn--primary" href="#book">Book A Call</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="wrap">
+    <div class="hero-copy">
+      <span class="eyebrow">For local businesses in any niche</span>
+      <h1>Website Design &amp; Marketing Systems <em>For Local Businesses</em></h1>
+      <p class="kicker">Let's skip the BS. Marketing isn't rocket science.</p>
+      <p class="lede">No agency out there (yep, us included) has a magic fix for every problem. We hand you the tools to win. You just have to commit to using them.</p>
+      <div class="hero-ctas">
+        <a class="btn btn--primary" href="#book">Book A Call <svg><use href="#arrow"/></svg></a>
+        <a class="btn btn--ghost" href="#systems">See What's Included</a>
+      </div>
+      <div class="ratings" aria-label="Review platforms">
+        <span><b>★★★★★</b>Google</span>
+        <span><b>★★★★★</b>Facebook</span>
+        <span><b>★★★★★</b>Trustpilot</span>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+    <figure class="mascot">
+      <div class="bubble">Hi, I'm <b>Alu</b>! I never miss a lead.</div>
+      <svg viewBox="0 0 240 320" role="img" aria-label="Alu, the Aluvia otter mascot, waving"><use href="#otter"/></svg>
+    </figure>
+    <div class="phone" role="img" aria-label="Example of a missed call turning into a booked appointment through an automatic text reply">
+      <div class="phone-screen">
+        <div class="phone-top">
+          <div class="avatar">SM</div>
+          <div><b>Sarah M.</b><small>New lead · from your website</small></div>
+        </div>
+        <div class="thread">
+          <span class="sys"><i></i>Missed call · 6:42 PM</span>
+          <div class="msg out">Hi! This is Bloom Dental. Sorry we missed your call. How can we help?</div>
+          <span class="msg-meta">Auto-sent · 6:42 PM</span>
+          <div class="msg in">Hey! I need a cleaning and my tooth's been sensitive. Any openings this week?</div>
+          <div class="msg out">We sure do. Does Wednesday at 10:30 AM work for you?</div>
+          <div class="booked"><svg><use href="#check"/></svg><span><b>Appointment booked</b> · Wed 10:30 AM</span></div>
+        </div>
+      </div>
+    </div>
+    </div>
+  </div>
+</header>
+
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-track">
+    <span>Dentists</span><span>Med Spas</span><span>Salons</span><span>Gyms</span><span>Roofers</span><span>Restaurants</span><span>Law Firms</span><span>Real Estate</span><span>Auto Repair</span><span>Cleaning Services</span><span>Chiropractors</span><span>HVAC</span>
+    <span>Dentists</span><span>Med Spas</span><span>Salons</span><span>Gyms</span><span>Roofers</span><span>Restaurants</span><span>Law Firms</span><span>Real Estate</span><span>Auto Repair</span><span>Cleaning Services</span><span>Chiropractors</span><span>HVAC</span>
+  </div>
+</div>
+
+<section class="band" id="systems">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Our products</span>
+      <h2>Simple systems that actually work<small>No marketing degree required. Just a business you want to grow.</small></h2>
+    </div>
+
+    <div class="systems">
+      <div class="tablist" role="tablist" aria-label="Aluvia products">
+        <button class="tab" role="tab" id="t-web" aria-controls="p-web" aria-selected="true">
+          <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 8h18M8 21h8"/></svg></span>
+          <b>Functional Website</b><small>Leads go straight to your phone</small>
+        </button>
+        <button class="tab" role="tab" id="t-rev" aria-controls="p-rev" aria-selected="false" tabindex="-1">
+          <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M12 3l2.6 5.6 6 .7-4.5 4.1 1.2 6L12 16.4 6.7 19.4l1.2-6L3.4 9.3l6-.7z"/></svg></span>
+          <b>5-Star Review Funnel</b><small>Reviews on autopilot</small>
+        </button>
+        <button class="tab" role="tab" id="t-mctb" aria-controls="p-mctb" aria-selected="false" tabindex="-1">
+          <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg></span>
+          <b>Missed Call Text Back</b><small>Never lose another lead</small>
+        </button>
+        <button class="tab" role="tab" id="t-camp" aria-controls="p-camp" aria-selected="false" tabindex="-1">
+          <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10v4h3l6 4V6L7 10H4zM17 9a4 4 0 0 1 0 6"/></svg></span>
+          <b>One-Click Campaigns</b><small>Referrals &amp; repeat customers</small>
+        </button>
+        <button class="tab" role="tab" id="t-seo" aria-controls="p-seo" aria-selected="false" tabindex="-1">
+          <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg></span>
+          <b>Local SEO</b><small>Get found nearby</small>
+        </button>
+      </div>
+
+      <article class="panel" role="tabpanel" id="p-web" aria-labelledby="t-web">
+        <header>
+          <span class="eyebrow">Functional Website</span>
+          <h3>A website that turns visitors into text conversations</h3>
+          <p>Every lead from your site becomes a text conversation that lands DIRECTLY on your phone.</p>
+        </header>
+        <ul class="points">
+          <li><b>Actually Get Found Online</b><span>If a customer searches for your business and nothing shows up, that's awkward. Relax, we won't let that happen.</span></li>
+          <li><b>Show Off Your Best Reviews</b><span>Everyone has a bad review or two. That doesn't mean new customers need to see them first.</span></li>
+          <li><b>Mobile Friendly</b><span>Most people find you on their phone. We make sure your business looks extra good on that tiny screen.</span></li>
+          <li><b>Built For Local Google Searches</b><span>Kind of obvious, but we'll say it anyway: we make sure Google can find you.</span></li>
+        </ul>
+        <div class="panel-foot">
+          <span class="stat"><b>7–10</b>days from kickoff to launch</span>
+          <a class="btn btn--link" href="#book">See a short demo →</a>
+        </div>
+      </article>
+
+      <article class="panel" role="tabpanel" id="p-rev" aria-labelledby="t-rev" hidden>
+        <header>
+          <span class="eyebrow">5-Star Review Funnel</span>
+          <h3>"Sure, I'll leave you a review." Then they forget.</h3>
+          <p>People mean well, but life gets busy. We'll give them a friendly nudge for a few weeks until they remember.</p>
+        </header>
+        <ul class="points">
+          <li><b>Ask For Reviews In One Click</b><span>We promised simple. If it confuses you, we're fired (and very embarrassed).</span></li>
+          <li><b>Automatic Follow-Up Reminders</b><span>Polite reminders go out on their own, so you never have to chase anyone.</span></li>
+          <li><b>Happy Customers Go To Google</b><span>Customers who loved you get guided straight to your 5-star review page.</span></li>
+          <li><b>Stop Stressing About Bad Reviews</b><span>Unhappy customers reach you privately first, so you get a chance to make it right.</span></li>
+        </ul>
+        <div class="panel-foot">
+          <span class="stat"><b>1 click</b>to request a review</span>
+          <a class="btn btn--link" href="#book">See a short demo →</a>
+        </div>
+      </article>
+
+      <article class="panel" role="tabpanel" id="p-mctb" aria-labelledby="t-mctb" hidden>
+        <header>
+          <span class="eyebrow">Missed Call Text Back</span>
+          <h3>Everyone misses calls. Not everyone texts back.</h3>
+          <p>Be the business that does. It's the easiest way to beat your competition.</p>
+        </header>
+        <ul class="points">
+          <li><b>No More Lost Leads</b><span>Busy with a client and can't pick up? We send a text and start the conversation for you.</span></li>
+          <li><b>Show Customers You Care</b><span>Nobody likes being ignored, your customers included. A quick text shows them they matter.</span></li>
+          <li><b>Be Available 24/7</b><span>Missed a call after hours? We'll make sure they hear back while you get your beauty sleep.</span></li>
+          <li><b>Stand Out From The Competition</b><span>The business that replies first usually gets the job. Make that you.</span></li>
+        </ul>
+        <div class="panel-foot">
+          <span class="stat"><b>&lt;10 sec</b>from missed call to text</span>
+          <a class="btn btn--link" href="#book">See a short demo →</a>
+        </div>
+      </article>
+
+      <article class="panel" role="tabpanel" id="p-camp" aria-labelledby="t-camp" hidden>
+        <header>
+          <span class="eyebrow">One-Click Marketing Campaigns</span>
+          <h3>Referrals and repeat customers are the best customers</h3>
+          <p>You know it and we know it. Let's get you more of both.</p>
+        </header>
+        <ul class="points">
+          <li><b>Done For You</b><span>Keeping it simple again: turn on our pre-built campaigns with one click.</span></li>
+          <li><b>Referral Campaigns</b><span>You do great work and your customers love you. We remind them to tell their friends.</span></li>
+          <li><b>Return Customer Campaigns</b><span>Loyal customers keep a business alive. Special offers keep them coming back.</span></li>
+          <li><b>Marketing At Your Fingertips</b><span>Press a button and we handle the rest. No need to hire a marketing team.</span></li>
+        </ul>
+        <div class="panel-foot">
+          <span class="stat"><b>1 click</b>to launch a campaign</span>
+          <a class="btn btn--link" href="#book">See a short demo →</a>
+        </div>
+      </article>
+
+      <article class="panel" role="tabpanel" id="p-seo" aria-labelledby="t-seo" hidden>
+        <header>
+          <span class="eyebrow">Local SEO</span>
+          <h3>"Rank #1 on Google in a week!" Just kidding. SEO takes time.</h3>
+          <p>We build steady, organic visibility in your area so the right customers find you without paying per click.</p>
+        </header>
+        <ul class="points">
+          <li><b>Qualified Leads</b><span>Beats paying $50 for a lead who never answers the phone, right?</span></li>
+          <li><b>Stop Paying For Bad Leads</b><span>Quality over quantity, like mom always said. We agree with her.</span></li>
+          <li><b>Organic Lead System</b><span>Create your own qualified leads instead of paying for tire-kickers.</span></li>
+          <li><b>Google Business Profile</b><span>Set up, kept current and connected to your reviews.</span></li>
+        </ul>
+        <div class="panel-foot">
+          <span class="stat"><b>$0</b>per organic lead</span>
+          <a class="btn btn--link" href="#book">See a short demo →</a>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="band band--soft" id="niches">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Who we serve</span>
+      <h2>Serving all these niches and more...</h2>
+      <p>If you serve customers in your area, our systems work for you.</p>
+    </div>
+    <div class="niches">
+      <span>Dentists</span><span>Med Spas</span><span>Hair &amp; Nail Salons</span><span>Barbershops</span><span>Gyms &amp; Fitness Studios</span><span>Chiropractors</span><span>Physical Therapy</span><span>Restaurants &amp; Cafés</span><span>Law Firms</span><span>Real Estate Agents</span><span>Insurance Agencies</span><span>Accountants</span><span>Auto Repair</span><span>Car Detailing</span><span>Cleaning Services</span><span>Pet Groomers</span><span>Photographers</span><span>Roofing</span><span>HVAC</span><span>Plumbing</span><span>Electricians</span><span>Landscaping</span><span>Remodeling</span><span>Pest Control</span>
+    </div>
+    <div class="niches-foot">
+      <span>Don't see your business?</span>
+      <a class="btn btn--link" href="#book">Ask us on a call →</a>
+    </div>
+  </div>
+</section>
+
+<section class="band band--navy" id="process">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Our process</span>
+      <h2>What working with us looks like...</h2>
+    </div>
+    <ol class="steps">
+      <li>
+        <span class="dot">1</span>
+        <span class="time">Demo Call · 20 mins</span>
+        <h3>Let's talk</h3>
+        <p>Okay, it's a sales call. We just didn't want to scare you off. We'll answer every question, show you any feature and walk you through real client accounts and results.</p>
+      </li>
+      <li>
+        <span class="dot">2</span>
+        <span class="time">We Build Your System · 7–10 days</span>
+        <h3>We get to work</h3>
+        <p>Fill out a quick onboarding form with your business details. Once we have what we need, we build your new website and marketing system.</p>
+      </li>
+      <li>
+        <span class="dot">3</span>
+        <span class="time">Launch Call · 25 mins</span>
+        <h3>You go live</h3>
+        <p>We show you how "everything" works. And by everything, we mostly mean pressing two buttons.</p>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<section class="band">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Why Aluvia</span>
+      <h2>Why we're "totally unique"...<small>just like everyone else, right?</small></h2>
+    </div>
+    <div class="why">
+      <div><h3><svg><use href="#check"/></svg>Simple To Use</h3><p>We built Aluvia around one idea: it has to be simple. So everything is.</p></div>
+      <div><h3><svg><use href="#check"/></svg>Affordable</h3><p>Our pricing is built to keep you for 10 years, not 10 weeks. We're in it for the long haul.</p></div>
+      <div><h3><svg><use href="#check"/></svg>No Contracts</h3><p>If it's affordable and it works, why would we need a contract? Happy customers stay.</p></div>
+      <div><h3><svg><use href="#check"/></svg>No BS</h3><p>No fluff. We tell you exactly what we'll do, then we do it. Period.</p></div>
+      <div><h3><svg><use href="#check"/></svg>We Have Proof</h3><p>We already know what works, and we have the reviews and results to back it up.</p></div>
+      <div><h3><svg><use href="#check"/></svg>Constant Improvements</h3><p>We keep updating our systems so you always get the most for your money.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="band band--soft" id="reviews">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Testimonials</span>
+      <h2>The proof is in the pudding...<small>Here's what our clients have to say.</small></h2>
+    </div>
+    <div class="reviews">
+      <figure class="review">
+        <span class="stars" aria-label="5 out of 5 stars">★★★★★</span>
+        <blockquote>"Your client's review goes here. Keep it short and specific: what changed for their business after working with you."</blockquote>
+        <footer><div class="avatar">AB</div><div><b>Client name</b><small>Dental Office · City, ST</small></div><span class="tag">Sample</span></footer>
+      </figure>
+      <figure class="review">
+        <span class="stars" aria-label="5 out of 5 stars">★★★★★</span>
+        <blockquote>"A second review, ideally with a result: more calls, a first lead within days, or less time chasing reviews."</blockquote>
+        <footer><div class="avatar">CD</div><div><b>Client name</b><small>Med Spa · City, ST</small></div><span class="tag">Sample</span></footer>
+      </figure>
+      <figure class="review">
+        <span class="stars" aria-label="5 out of 5 stars">★★★★★</span>
+        <blockquote>"A third review about working with your team: easy to reach, honest, and quick to get everything set up."</blockquote>
+        <footer><div class="avatar">EF</div><div><b>Client name</b><small>Roofing · City, ST</small></div><span class="tag">Sample</span></footer>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="faq">
+  <div class="wrap faq-grid">
+    <div class="section-head">
+      <span class="eyebrow">FAQ</span>
+      <h2>Frequently Asked Questions</h2>
+      <p>Still not sure? Ask us anything on a quick call.</p>
+    </div>
+    <div class="faq">
+      <details open>
+        <summary>When am I going to start seeing results?</summary>
+        <p>Missed call text back and review requests start working the day you launch. SEO builds over a few months. How fast you grow comes down to how consistently you use the tools.</p>
+      </details>
+      <details>
+        <summary>Why is your pricing so cheap?</summary>
+        <p>We built one system that works across niches and keep improving it, instead of building everything custom from scratch. That saves us a lot of time, and we pass the savings on to you.</p>
+      </details>
+      <details>
+        <summary>What happens if I decide to cancel?</summary>
+        <p>No contracts, so you can cancel anytime. We'll walk you through what happens to your website and phone number so nothing falls through the cracks.</p>
+      </details>
+      <details>
+        <summary>Can people find my website on Google?</summary>
+        <p>Yes. Every site is set up for local search from day one and connected to your Google Business Profile.</p>
+      </details>
+      <details>
+        <summary>Why pay for a website when word of mouth already brings in business?</summary>
+        <p>Because people who hear about you look you up before they reach out. A solid website and great reviews turn those referrals into paying customers instead of second thoughts.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<section class="cta" id="book">
+  <div class="wrap">
+    <div>
+      <span class="eyebrow">Want to schedule a time to talk?</span>
+      <h2>Let's get your phone <em>ringing.</em></h2>
+      <p>See everything we do to help you grow, so you can do it yourself or let us do it for you.</p>
+    </div>
+    <div class="cta-side">
+      <svg class="otter" viewBox="0 0 240 320" aria-hidden="true"><use href="#otter"/></svg>
+      <a class="btn btn--primary" href="#book">Book A Call <svg><use href="#arrow"/></svg></a>
+    </div>
+  </div>
+</section>
+
+<footer class="site">
+  <div class="wrap">
+    <div class="brand">
+      <a class="logo" href="#top"><svg><use href="#mark"/></svg><span>Aluvia<small>SYSTEMS</small></span></a>
+      <p>Website design and marketing systems for local businesses.</p>
+    </div>
+    <div><h4>Products</h4><ul><li><a href="#systems">Functional Website</a></li><li><a href="#systems">Missed Call Text Back</a></li><li><a href="#systems">5-Star Review Funnel</a></li><li><a href="#systems">One-Click Campaigns</a></li><li><a href="#systems">Local SEO</a></li></ul></div>
+    <div><h4>About</h4><ul><li><a href="#process">Our Process</a></li><li><a href="#niches">Niches We Serve</a></li><li><a href="#reviews">Testimonials</a></li><li><a href="#faq">FAQ</a></li></ul></div>
+    <div><h4>Links</h4><ul><li><a href="#book">Pricing</a></li><li><a href="#book">Book A Call</a></li><li><a href="#book">Log in</a></li></ul></div>
+    <div class="legal"><span>© 2026 Aluvia Systems. All rights reserved.</span><span>Terms &amp; Conditions · Privacy Policy · SMS Terms</span></div>
+  </div>
+</footer>
+
+<script>
+(() => {
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    document.querySelectorAll('animateTransform').forEach(a => a.remove());
+  }
+  const tabs = [...document.querySelectorAll('[role="tab"]')];
+  function select(tab, focus) {
+    tabs.forEach(t => {
+      const on = t === tab;
+      t.setAttribute('aria-selected', on);
+      t.tabIndex = on ? 0 : -1;
+      document.getElementById(t.getAttribute('aria-controls')).hidden = !on;
+    });
+    if (focus) tab.focus();
+  }
+  tabs.forEach((t, i) => {
+    t.addEventListener('click', () => select(t));
+    t.addEventListener('keydown', e => {
+      const d = { ArrowDown: 1, ArrowRight: 1, ArrowUp: -1, ArrowLeft: -1 }[e.key];
+      if (d) { e.preventDefault(); select(tabs[(i + d + tabs.length) % tabs.length], true); }
+    });
+  });
+})();
+</script>
+
+</body>
+</html>
