@@ -4,7 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Aluvia Systems</title>
-<meta name="description" content="Website design and marketing systems for local businesses.">
+<meta name="description" content="Aluvia Systems builds websites, missed call text back and automatic Google review requests for local service businesses. $297/month, no contract, live in 7 to 10 days.">
+<link rel="canonical" href="https://aluvia-hq.com/">
+<meta property="og:title" content="Aluvia Systems">
+<meta property="og:description" content="Websites and marketing systems for local businesses. $297/month, no contract.">
+<meta property="og:url" content="https://aluvia-hq.com/">
+<meta property="og:type" content="website">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Instrument+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap">
@@ -241,6 +246,24 @@ a { color: inherit; }
 @media (max-width: 560px) { .why { grid-template-columns: 1fr; } }
 
 /* ---------- Reviews ---------- */
+.trk { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 20px; }
+.trk-card { margin: 0; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 24px; display: grid; gap: 8px; align-content: start; }
+.trk-card b { font-family: "Bricolage Grotesque", sans-serif; font-weight: 800; font-size: 2.2rem; line-height: 1.05; color: var(--blue); }
+.trk-card p { margin: 0; font-size: 1.02rem; }
+.trk-card footer { margin-top: 8px; display: grid; gap: 2px; font-size: .86rem; color: var(--ink-soft); }
+.trk-card footer span { color: var(--ink); font-weight: 600; }
+.trk-card footer a { color: var(--ink-soft); }
+@media (max-width: 900px) { .trk { grid-template-columns: 1fr; } }
+.plan { max-width: 620px; margin: 0 auto; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 32px; display: grid; gap: 22px; }
+.plan-price { display: flex; align-items: baseline; gap: 6px; }
+.plan-price b { font-family: "Bricolage Grotesque", sans-serif; font-weight: 800; font-size: 3rem; line-height: 1; color: var(--ink); }
+.plan-price span { color: var(--ink-soft); font-size: 1.05rem; }
+.plan-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+.plan-list li { display: flex; gap: 10px; align-items: flex-start; line-height: 1.45; }
+.plan-list svg { width: 20px; height: 20px; flex: none; color: var(--blue); margin-top: 2px; }
+.plan .btn { justify-self: start; }
+.cta-mail { margin-top: 12px; font-size: .95rem; opacity: .85; }
+.cta-mail a { color: inherit; }
 .reviews { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 20px; }
 .review { margin: 0; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 26px; display: grid; gap: 18px; align-content: space-between; }
 .stars { color: var(--orange); letter-spacing: 2px; font-size: 1rem; }
@@ -332,13 +355,12 @@ footer.site .brand p { max-width: 22rem; }
     <a class="logo" href="#top"><svg><use href="#mark"/></svg><span>Aluvia<small>SYSTEMS</small></span></a>
     <ul>
       <li><a href="#systems">Products</a></li>
-      <li><a href="#book">Pricing</a></li>
-      <li><a href="#reviews">Testimonials</a></li>
+      <li><a href="#track">Results</a></li>
+      <li><a href="#pricing">Pricing</a></li>
       <li><a href="#process">Our Process</a></li>
       <li><a href="#faq">FAQ</a></li>
     </ul>
     <div class="nav-right">
-      <a class="login" href="#book">Log in</a>
       <a class="btn btn--primary" href="#book">Book A Call</a>
     </div>
   </div>
@@ -354,11 +376,6 @@ footer.site .brand p { max-width: 22rem; }
       <div class="hero-ctas">
         <a class="btn btn--primary" href="#book">Book A Call <svg><use href="#arrow"/></svg></a>
         <a class="btn btn--ghost" href="#systems">See What's Included</a>
-      </div>
-      <div class="ratings" aria-label="Review platforms">
-        <span><b>★★★★★</b>Google</span>
-        <span><b>★★★★★</b>Facebook</span>
-        <span><b>★★★★★</b>Trustpilot</span>
       </div>
     </div>
 
@@ -546,7 +563,7 @@ footer.site .brand p { max-width: 22rem; }
         <span class="dot">1</span>
         <span class="time">Demo Call · 20 mins</span>
         <h3>Let's talk</h3>
-        <p>Okay, it's a sales call. We just didn't want to scare you off. We'll answer every question, show you any feature and walk you through real client accounts and results.</p>
+        <p>Okay, it's a sales call. We just didn't want to scare you off. We'll answer every question, and show you every feature live.</p>
       </li>
       <li>
         <span class="dot">2</span>
@@ -575,34 +592,64 @@ footer.site .brand p { max-width: 22rem; }
       <div><h3><svg><use href="#check"/></svg>Affordable</h3><p>Our pricing is built to keep you for 10 years, not 10 weeks. We're in it for the long haul.</p></div>
       <div><h3><svg><use href="#check"/></svg>No Contracts</h3><p>If it's affordable and it works, why would we need a contract? Happy customers stay.</p></div>
       <div><h3><svg><use href="#check"/></svg>No BS</h3><p>No fluff. We tell you exactly what we'll do, then we do it. Period.</p></div>
-      <div><h3><svg><use href="#check"/></svg>We Have Proof</h3><p>We already know what works, and we have the reviews and results to back it up.</p></div>
+      <div><h3><svg><use href="#check"/></svg>Fast Setup</h3><p>Seven to ten days from kickoff to launch. We do the building, you keep running your business.</p></div>
       <div><h3><svg><use href="#check"/></svg>Constant Improvements</h3><p>We keep updating our systems so you always get the most for your money.</p></div>
     </div>
   </div>
 </section>
 
-<section class="band band--soft" id="reviews">
+<section class="band" id="track">
   <div class="wrap">
     <div class="section-head">
-      <span class="eyebrow">Testimonials</span>
-      <h2>The proof is in the pudding...<small>Here's what our clients have to say.</small></h2>
+      <span class="eyebrow">Track record</span>
+      <h2>Results we helped deliver before Aluvia<small>Our founder worked on client delivery at Stone Systems and Golden Goose Reviews. These are their clients' published results, shared with their blessing. Aluvia is new; our own client results are coming.</small></h2>
     </div>
-    <div class="reviews">
-      <figure class="review">
-        <span class="stars" aria-label="5 out of 5 stars">★★★★★</span>
-        <blockquote>"Your client's review goes here. Keep it short and specific: what changed for their business after working with you."</blockquote>
-        <footer><div class="avatar">AB</div><div><b>Client name</b><small>Dental Office · City, ST</small></div><span class="tag">Sample</span></footer>
+    <div class="trk">
+      <figure class="trk-card">
+        <b>$350K+</b><p>in sales in under 4 months</p>
+        <footer><span>Contractor · Alaska</span><a href="https://stonesystems.io/results" target="_blank" rel="noopener">Stone Systems client ↗</a></footer>
       </figure>
-      <figure class="review">
-        <span class="stars" aria-label="5 out of 5 stars">★★★★★</span>
-        <blockquote>"A second review, ideally with a result: more calls, a first lead within days, or less time chasing reviews."</blockquote>
-        <footer><div class="avatar">CD</div><div><b>Client name</b><small>Med Spa · City, ST</small></div><span class="tag">Sample</span></footer>
+      <figure class="trk-card">
+        <b>14 → 60</b><p>Google reviews in 3 weeks</p>
+        <footer><span>Little City Landscape</span><a href="https://goldengoosereviews.com/home" target="_blank" rel="noopener">Golden Goose Reviews client ↗</a></footer>
       </figure>
-      <figure class="review">
-        <span class="stars" aria-label="5 out of 5 stars">★★★★★</span>
-        <blockquote>"A third review about working with your team: easy to reach, honest, and quick to get everything set up."</blockquote>
-        <footer><div class="avatar">EF</div><div><b>Client name</b><small>Roofing · City, ST</small></div><span class="tag">Sample</span></footer>
+      <figure class="trk-card">
+        <b>30 → 150</b><p>Google reviews in 2 weeks</p>
+        <footer><span>Aspen Tree Service</span><a href="https://goldengoosereviews.com/home" target="_blank" rel="noopener">Golden Goose Reviews client ↗</a></footer>
       </figure>
+      <figure class="trk-card">
+        <b>Day 15</b><p>first lead, page one of Google in 3 weeks</p>
+        <footer><span>Corley Contemporary Painting</span><a href="https://stonesystems.io/results" target="_blank" rel="noopener">Stone Systems client ↗</a></footer>
+      </figure>
+      <figure class="trk-card">
+        <b>20 → 50</b><p>Google reviews in 1 week</p>
+        <footer><span>Rehaul Junk Removal</span><a href="https://goldengoosereviews.com/home" target="_blank" rel="noopener">Golden Goose Reviews client ↗</a></footer>
+      </figure>
+      <figure class="trk-card">
+        <b>5 reviews</b><p>in 22 hours</p>
+        <footer><span>Local service business</span><a href="https://stonesystems.io/results" target="_blank" rel="noopener">Stone Systems client ↗</a></footer>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<section class="band band--soft" id="pricing">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Pricing</span>
+      <h2>One plan. Everything included.<small>No contract. Cancel any month.</small></h2>
+    </div>
+    <div class="plan">
+      <div class="plan-price"><b>$297</b><span>/month</span></div>
+      <ul class="plan-list">
+        <li><svg><use href="#check"/></svg>Functional website, built for local search</li>
+        <li><svg><use href="#check"/></svg>Missed call text back, in under 10 seconds</li>
+        <li><svg><use href="#check"/></svg>5-star review funnel with automatic reminders</li>
+        <li><svg><use href="#check"/></svg>One-click referral and repeat customer campaigns</li>
+        <li><svg><use href="#check"/></svg>Google Business Profile set up and kept current</li>
+        <li><svg><use href="#check"/></svg>Live in 7 to 10 days, with a launch call</li>
+      </ul>
+      <a class="btn btn--primary" href="#book">Book A Call <svg><use href="#arrow"/></svg></a>
     </div>
   </div>
 </section>
@@ -645,10 +692,11 @@ footer.site .brand p { max-width: 22rem; }
       <span class="eyebrow">Want to schedule a time to talk?</span>
       <h2>Let's get your phone <em>ringing.</em></h2>
       <p>See everything we do to help you grow, so you can do it yourself or let us do it for you.</p>
+      <p class="cta-mail">Or email us: <a href="mailto:team@aluvia-hq.com">team@aluvia-hq.com</a></p>
     </div>
     <div class="cta-side">
       <svg class="otter" viewBox="0 0 240 320" aria-hidden="true"><use href="#otter"/></svg>
-      <a class="btn btn--primary" href="#book">Book A Call <svg><use href="#arrow"/></svg></a>
+      <a class="btn btn--primary" href="mailto:team@aluvia-hq.com?subject=Book%20a%20call">Book A Call <svg><use href="#arrow"/></svg></a>
     </div>
   </div>
 </section>
@@ -660,9 +708,9 @@ footer.site .brand p { max-width: 22rem; }
       <p>Website design and marketing systems for local businesses.</p>
     </div>
     <div><h4>Products</h4><ul><li><a href="#systems">Functional Website</a></li><li><a href="#systems">Missed Call Text Back</a></li><li><a href="#systems">5-Star Review Funnel</a></li><li><a href="#systems">One-Click Campaigns</a></li><li><a href="#systems">Local SEO</a></li></ul></div>
-    <div><h4>About</h4><ul><li><a href="#process">Our Process</a></li><li><a href="#niches">Niches We Serve</a></li><li><a href="#reviews">Testimonials</a></li><li><a href="#faq">FAQ</a></li></ul></div>
-    <div><h4>Links</h4><ul><li><a href="#book">Pricing</a></li><li><a href="#book">Book A Call</a></li><li><a href="#book">Log in</a></li></ul></div>
-    <div class="legal"><span>© 2026 Aluvia Systems. All rights reserved.</span><span>Terms &amp; Conditions · Privacy Policy · SMS Terms</span></div>
+    <div><h4>About</h4><ul><li><a href="#process">Our Process</a></li><li><a href="#niches">Niches We Serve</a></li><li><a href="#faq">FAQ</a></li></ul></div>
+    <div><h4>Links</h4><ul><li><a href="#pricing">Pricing</a></li><li><a href="#book">Book A Call</a></li><li><a href="mailto:team@aluvia-hq.com">team@aluvia-hq.com</a></li></ul></div>
+    <div class="legal"><span>© 2026 Aluvia Systems. All rights reserved.</span><span>Website design and marketing systems for local businesses.</span></div>
   </div>
 </footer>
 
