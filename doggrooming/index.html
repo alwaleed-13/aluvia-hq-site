@@ -59,7 +59,8 @@ h2 { font: 700 clamp(19px, 3vw, 28px)/1.2 var(--display); letter-spacing: -.015e
 .note { font-size: 14px; color: var(--muted); text-align: center; margin: 0; }
 
 .book { background: var(--tint); border: 1px solid var(--line); border-radius: 18px; padding: 22px; display: flex; flex-direction: column; gap: 16px; }
-.cal { width: 100%; min-height: 720px; border: 0; border-radius: 12px; background: #FFFFFF; }
+.cal { width: 100%; height: 820px; border: 0; border-radius: 12px; background: #FFFFFF; }
+.cal-link { align-self: center; font-size: 14px; color: var(--muted); text-decoration: underline; }
 .reply { font-size: 18px; text-align: center; line-height: 1.5; }
 .reply b { display: block; font: 700 22px var(--display); margin-bottom: 4px; }
 .btn { align-self: center; display: inline-flex; align-items: center; gap: 10px; font: 700 18px var(--body); color: #FFFFFF; background: var(--orange); border: 0; border-radius: 12px; padding: 16px 30px; cursor: pointer; text-decoration: none; box-shadow: 0 12px 26px -10px rgba(255,122,26,.8); transition: transform .15s; }
@@ -102,7 +103,7 @@ footer a { color: #C3D0EC; }
   .player { border-radius: 12px; }
   .player .start span { width: 68px; height: 68px; }
   .player .start span::after { border-left-width: 22px; border-top-width: 13px; border-bottom-width: 13px; }
-  .cal { min-height: 1080px; }
+  .cal { height: 1250px; }
 }
 @media (prefers-reduced-motion: reduce) { .btn, .player .start span { transition: none; } }
 </style>
@@ -137,7 +138,7 @@ footer a { color: #C3D0EC; }
 <section class="step" id="book">
   <div class="wrap">
     <div class="step-label"><em>STEP 2</em><h2>Book your call. We’ll show you the exact systems we’d install to outrank your competitors.</h2></div>
-    <div class="book"><iframe class="cal" src="https://calendly.com/team-aluvia-hq/strategy-call?embed_domain=aluvia-hq.com&amp;embed_type=Inline&amp;hide_gdpr_banner=1&amp;primary_color=ff7a1a" title="Book your walkthrough" loading="lazy"></iframe><a class="btn" href="https://calendly.com/team-aluvia-hq/strategy-call" target="_blank" rel="noopener">Open the calendar in a new tab →</a></div>
+    <div class="book"><iframe class="cal" src="https://calendly.com/team-aluvia-hq/strategy-call?embed_domain=aluvia-hq.com&amp;embed_type=Inline&amp;hide_gdpr_banner=1&amp;primary_color=ff7a1a" title="Book your call" loading="lazy"></iframe><a class="cal-link" href="https://calendly.com/team-aluvia-hq/strategy-call" target="_blank" rel="noopener">Calendar not loading? Open it here</a></div>
   </div>
 </section>
 

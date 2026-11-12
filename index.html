@@ -254,9 +254,10 @@ a { color: inherit; }
 .trk-card footer span { color: var(--ink); font-weight: 600; }
 .trk-card footer a { color: var(--ink-soft); }
 @media (max-width: 900px) { .trk { grid-template-columns: 1fr; } }
+.cal-link { font-size: .9rem; color: var(--ink-soft); text-decoration: underline; }
 .cal-card { max-width: 1100px; margin: 0 auto; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 14px; display: grid; gap: 10px; justify-items: center; }
-.cal { width: 100%; min-height: 720px; border: 0; border-radius: 12px; background: #FFFFFF; }
-@media (max-width: 760px) { .cal { min-height: 1080px; } }
+.cal { width: 100%; height: 820px; border: 0; border-radius: 12px; background: #FFFFFF; }
+@media (max-width: 760px) { .cal { height: 1250px; } }
 .plan { max-width: 620px; margin: 0 auto; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 32px; display: grid; gap: 22px; }
 .plan-price { display: flex; align-items: baseline; gap: 6px; }
 .plan-price b { font-family: "Bricolage Grotesque", sans-serif; font-weight: 800; font-size: 3rem; line-height: 1; color: var(--ink); }
@@ -697,7 +698,7 @@ footer.site .brand p { max-width: 22rem; }
     </div>
     <div class="cal-card">
       <iframe class="cal" src="https://calendly.com/team-aluvia-hq/strategy-call?embed_domain=aluvia-hq.com&amp;embed_type=Inline&amp;hide_gdpr_banner=1&amp;primary_color=ff7a1a" title="Book a call with Aluvia" loading="lazy"></iframe>
-      <a class="btn btn--link" href="https://calendly.com/team-aluvia-hq/strategy-call" target="_blank" rel="noopener">Open the calendar in a new tab →</a>
+      <a class="cal-link" href="https://calendly.com/team-aluvia-hq/strategy-call" target="_blank" rel="noopener">Calendar not loading? Open it here</a>
     </div>
   </div>
 </section>
