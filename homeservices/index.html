@@ -59,7 +59,7 @@ h2 { font: 700 clamp(19px, 3vw, 28px)/1.2 var(--display); letter-spacing: -.015e
 .note { font-size: 14px; color: var(--muted); text-align: center; margin: 0; }
 
 .book { background: var(--tint); border: 1px solid var(--line); border-radius: 18px; padding: 22px; display: flex; flex-direction: column; gap: 16px; }
-.cal { width: 100%; height: 820px; border: 0; border-radius: 12px; background: #FFFFFF; }
+.cal { width: 100%; height: 700px; border: 0; transition: height .25s ease; border-radius: 12px; background: #FFFFFF; }
 .cal-link { align-self: center; font-size: 14px; color: var(--muted); text-decoration: underline; }
 .reply { font-size: 18px; text-align: center; line-height: 1.5; }
 .reply b { display: block; font: 700 22px var(--display); margin-bottom: 4px; }
@@ -103,7 +103,7 @@ footer a { color: #C3D0EC; }
   .player { border-radius: 12px; }
   .player .start span { width: 68px; height: 68px; }
   .player .start span::after { border-left-width: 22px; border-top-width: 13px; border-bottom-width: 13px; }
-  .cal { height: 1250px; }
+  .cal { height: 1000px; }
 }
 @media (prefers-reduced-motion: reduce) { .btn, .player .start span { transition: none; } }
 </style>
@@ -185,6 +185,26 @@ footer a { color: #C3D0EC; }
   b.addEventListener("click", function () { on(); v.play(); });
   v.addEventListener("play", on);
   v.addEventListener("ended", function () { document.getElementById("book").scrollIntoView({ behavior: "smooth" }); });
+})();
+</script>
+<script>
+/* Calendly height: follow each booking step so there's no empty white space. */
+(function () {
+  var f = document.querySelector("iframe.cal");
+  if (!f) return;
+  function mobile() { return window.innerWidth <= 760; }
+  var H = { pick: function () { return mobile() ? 1000 : 700; }, form: function () { return mobile() ? 1220 : 880; }, done: function () { return mobile() ? 620 : 600; } };
+  function set(h) { f.style.height = Math.max(480, Math.round(h)) + "px"; }
+  var got = false;
+  set(H.pick());
+  window.addEventListener("message", function (e) {
+    if (!/calendly\.com$/.test((e.origin || "").replace(/^https?:\/\//, ""))) return;
+    var d = e.data || {}, ev = d.event || "";
+    if (ev === "calendly.page_height" && d.payload && d.payload.height) { var h = parseInt(d.payload.height, 10); if (h >= 300) { got = true; set(h + 8); } return; }
+    if (ev === "calendly.date_and_time_selected") { if (!got) set(H.form()); }
+    else if (ev === "calendly.event_scheduled") { set(H.done()); f.scrollIntoView({ behavior: "smooth", block: "start" }); }
+    else if (ev === "calendly.event_type_viewed") { if (!got) set(H.pick()); }
+  });
 })();
 </script>
 </body>
